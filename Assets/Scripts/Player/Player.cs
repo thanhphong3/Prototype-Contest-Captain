@@ -2,15 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
+    public enum STATE_PLAYER
+    {
+        Idle,
+        Run,
+        Fix,
+    }
+
     public static Player Instance;
-    private const float NEAR_0 = 0.01f;
+
     private Vector3 target;
     private CombatVehicle currentFixingVehicle;
-
     [SerializeField] float speed;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -19,33 +31,37 @@ public class Player : MonoBehaviour
     public void Init()
     {
         target = transform.position;
-        Instance = GetComponent<Player>();
-        // CustomEvents.OnClickOnMap += OnClickOnMap;
     }
-    void OnDestroy() 
+
+
+    public void Move()
     {
-        // CustomEvents.OnClickOnMap -= OnClickOnMap;
+        Vector3 posTarget = GetPointHand();
+        transform.DOMove(posTarget, GetTimeToTarget()).OnComplete(() =>
+        {
+
+        });
     }
-    void Update()
+    private float GetTimeToTarget()
     {
-        Move();
-    }
-    void Move()
-    {
-        if(Vector3.Distance(target, transform.position) > NEAR_0)
-            transform.Translate((target - transform.position).normalized * Time.deltaTime * speed);
+        return speed;
     }
     public void SetTarget(Vector3 _target)
     {
         target = _target;
     }
-    // void OnClickOnMap(Vector3 _target)
-    // {
-    //     Vector3 fixYTarget = new Vector3(_target.x,transform.position.y,_target.z);
-    //     SetTarget(fixYTarget);
-    // }
-    public CombatVehicle GetCurrentFixingVehicle()
+
+    private Vector3 GetPointHand()
     {
-        return currentFixingVehicle;
+        RaycastHit raycastHit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out raycastHit, 100f))
+        {
+            if (raycastHit.point != null)
+            {
+                return raycastHit.point;
+            }
+        }
+        return Vector3.zero;
     }
 }
