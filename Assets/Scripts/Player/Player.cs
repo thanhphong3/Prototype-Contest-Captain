@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     private const float NEAR_0 = 0.01f;
     private Vector3 target;
+    private CombatVehicle currentFixingVehicle;
 
     [SerializeField] float speed;
 
