@@ -4,15 +4,44 @@ using UnityEngine;
 
 public class CombatVehicle : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] float rechargeTime;
+    [SerializeField] float speed;
+    [SerializeField] float dmg;
+
+    enum State
+    {
+        Disable,
+        Spawning,
+        Counting,
+        Fixing,
+        Removed
+    }
+    private State state = State.Disable;
+    private float remainTime;
     void Start()
     {
         
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if(state == State.Counting)
+        {
+
+        }
+    }
+
+    public void StartFixing()
+    {
+        if(state == State.Counting)
+        {
+            state = State.Fixing;
+        }
+    }
+    public void StopFixing()
+    {
+        if(state == State.Fixing)
+        {
+            state = State.Counting;
+        }
     }
 }

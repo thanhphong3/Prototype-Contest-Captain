@@ -5,5 +5,5 @@ using System;
 
 public class CustomEvents : MonoBehaviour
 {
-    public static Action<Vector3> OnClickOnMap;
+    // public static Action<Vector3> OnClickOnMap;
 }

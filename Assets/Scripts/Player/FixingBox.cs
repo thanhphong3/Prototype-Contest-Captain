@@ -7,6 +7,15 @@ public class FixingBox : MonoBehaviour
     void OnTriggerEnter(Collider other) 
     {
         if(other.gameObject.CompareTag("Vehicle"))
-            Debug.Log("Mực Mực đẹp trai");
+        {
+            other.gameObject.GetComponent<CombatVehicle>().StartFixing();
+        }
+    }
+    void OnTriggerExit(Collider other) 
+    {
+        if(other.gameObject.CompareTag("Vehicle"))
+        {
+            other.gameObject.GetComponent<CombatVehicle>().StopFixing();
+        }
     }
 }

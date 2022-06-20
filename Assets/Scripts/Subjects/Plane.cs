@@ -22,8 +22,7 @@ public class Plane : MonoBehaviour
             {
                 if (raycastHit.transform != null)
                 {
-                    // Debug.Log("Mực đã click vào vị trí: " + raycastHit.point); 
-                    CustomEvents.OnClickOnMap?.Invoke(raycastHit.point);
+                    Player.Instance.SetTarget(raycastHit.point);
                 }
             }
         }
