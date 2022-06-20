@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
 
     private Vector3 target;
     private CombatVehicle currentFixingVehicle;
+    private Tween myTween;
+    private STATE_PLAYER state = STATE_PLAYER.Idle;
+    private bool triggerWithVehicle = false;
+
     [SerializeField] float speed;
 
     private void Awake()
@@ -32,19 +36,29 @@ public class Player : MonoBehaviour
     {
         target = transform.position;
     }
-
-
+    public void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            Move();
+        }
+    }
     public void Move()
     {
-        Vector3 posTarget = GetPointHand();
-        transform.DOMove(posTarget, GetTimeToTarget()).OnComplete(() =>
+        myTween.Kill();
+        target = GetPointHand();
+        SetState(STATE_PLAYER.Run);
+        myTween = transform.DOMove(target, GetTimeToTarget()).SetEase(Ease.Linear).OnComplete(() =>
         {
-
+            if(triggerWithVehicle)
+                SetState(STATE_PLAYER.Fix);
+            else
+                SetState(STATE_PLAYER.Idle);
         });
     }
     private float GetTimeToTarget()
     {
-        return speed;
+        return Vector3.Distance(target, transform.position) / speed;
     }
     public void SetTarget(Vector3 _target)
     {
@@ -57,11 +71,28 @@ public class Player : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out raycastHit, 100f))
         {
-            if (raycastHit.point != null)
+            if (raycastHit.point != null && raycastHit.transform.gameObject.CompareTag("Land"))
             {
+                // Vector3 result = new Vector3(raycastHit.point.x, transform.position.y, raycastHit.point.z);
                 return raycastHit.point;
             }
         }
-        return Vector3.zero;
+        return transform.position;
+    }
+    public void SetState(STATE_PLAYER _state)
+    {
+        state = _state;
+    }
+    public STATE_PLAYER GetState()
+    {
+        return state;
+    }
+    private bool CheckNearVehicle()
+    {
+        return false;
+    }
+    public void SetTriggerWithVehicle(bool _isTrigger)
+    {
+        triggerWithVehicle = _isTrigger;
     }
 }
