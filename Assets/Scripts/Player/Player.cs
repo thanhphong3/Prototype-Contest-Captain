@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     }
     public void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Move();
         }
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
         SetState(STATE_PLAYER.Run);
         myTween = transform.DOMove(target, GetTimeToTarget()).SetEase(Ease.Linear).OnComplete(() =>
         {
-            if(triggerWithVehicle)
+            if (triggerWithVehicle)
                 SetState(STATE_PLAYER.Fix);
             else
                 SetState(STATE_PLAYER.Idle);
@@ -71,10 +71,11 @@ public class Player : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out raycastHit, 100f))
         {
-            if (raycastHit.point != null && raycastHit.transform.gameObject.CompareTag("Land"))
+            if (raycastHit.point != null)
             {
-                // Vector3 result = new Vector3(raycastHit.point.x, transform.position.y, raycastHit.point.z);
-                return raycastHit.point;
+                Vector3 result = raycastHit.point;
+                result.y = 0;
+                return result;
             }
         }
         return transform.position;
