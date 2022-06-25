@@ -6,28 +6,19 @@ public class MinigameManager : MonoBehaviour
 {
     public static MinigameManager Instance;
 
-    [Header("Game Controllers")]
-    [SerializeField] CamerasController cameraController;
-    [SerializeField] VehiclePool vehiclePool;
-
     void Awake()
     {
         Instance = this;
     }
-    // Start is called before the first frame update
+
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector3 spawnPos = GetPointHand();
-            SpawnVehicleInPool(1, spawnPos);
-        }
+
     }
     private Vector3 GetPointHand()
     {
@@ -44,13 +35,11 @@ public class MinigameManager : MonoBehaviour
         }
         return transform.position;
     }
-    public void SpawnVehicleInPool(int _teamIndex, Vector3 _position)
-    {
-        vehiclePool.SpawnVehicleInPool(_teamIndex, _position);
-    }
+
+
     public void CameraShake(float _amount, float _time)
     {
-        cameraController.Shake(_amount, _time);
+        CamerasController.Instance.Shake(_amount, _time);
     }
 
 }

@@ -5,19 +5,26 @@ using Cinemachine;
 
 public class CamerasController : MonoBehaviour
 {
+    public static CamerasController Instance;
     [SerializeField] private CinemachineVirtualCamera cvm;
     private float shakeTimer;
-    CinemachineBasicMultiChannelPerlin cbcp;
+    private CinemachineBasicMultiChannelPerlin cbcp;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         cbcp = cvm.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
     void OnDestroy()
     {
+
     }
 
-    // Update is called once per frame
+
     public void Shake(float amount, float time)
     {
         // cbcp.m_AmplitudeGain = amount;
@@ -25,11 +32,12 @@ public class CamerasController : MonoBehaviour
         shakeTimer = time;
     }
 
-    void Update() {
-        if(shakeTimer >= 0f)
+    void Update()
+    {
+        if (shakeTimer >= 0f)
         {
-            shakeTimer -= Time.deltaTime;    
-            if(shakeTimer <= 0f)    
+            shakeTimer -= Time.deltaTime;
+            if (shakeTimer <= 0f)
                 cbcp.m_FrequencyGain = 0;
         }
     }
