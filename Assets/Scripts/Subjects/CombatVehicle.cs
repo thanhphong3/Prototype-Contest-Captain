@@ -122,6 +122,7 @@ public class CombatVehicle : MonoBehaviour
     }
     private void Fire()
     {
+        MinigameManager.Instance.CameraShake(3f, 0.2f);
         Removed();
     }
     private void BackToPool()
