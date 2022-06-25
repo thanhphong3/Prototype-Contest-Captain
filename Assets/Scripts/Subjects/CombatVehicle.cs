@@ -17,6 +17,10 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] GameObject fixingPanel;
     [SerializeField] Image fixCounter;
 
+    [Header("Game-feel side")]
+    [SerializeField] float shakeAmount;
+    [SerializeField] float shakeTime;
+
     enum State
     {
         Disable,
@@ -36,25 +40,26 @@ public class CombatVehicle : MonoBehaviour
     }
     void Update()
     {
-        if(state == State.Counting)
+        switch (state)
         {
-            remainTime -= Time.deltaTime;
-            if(remainTime <= 0)
-            {
-                Fire();
-            }
-        }
-        if(state == State.Fixing)
-        {
-            remainFixingTime -= Time.deltaTime;
-            if(remainFixingTime <= 0)
-            {
-                Fixed();
-            }
-        }
-        if(isMovableObject && state == State.Counting)
-        {
-            Move();
+            case State.Counting:
+                remainTime -= Time.deltaTime;
+                if(remainTime <= 0)
+                {
+                    Fire();
+                }
+                if(isMovableObject)
+                {
+                    Move();
+                }
+            break;
+            case State.Fixing:
+                remainFixingTime -= Time.deltaTime;
+                if(remainFixingTime <= 0)
+                {
+                    Fixed();
+                }
+            break;
         }
         UpdateUI();
     }
@@ -89,12 +94,9 @@ public class CombatVehicle : MonoBehaviour
         remainFixingTime = fixingTime;
         SetState(State.Counting);
     }
-    public void StopCounting()
-    {
-        SetState(State.Stoping);
-    }
     public void Spawn(Vector3 _position)
     {
+        gameObject.SetActive(true);
         transform.position = _position;
         StartCounting();
     }
@@ -122,11 +124,19 @@ public class CombatVehicle : MonoBehaviour
     }
     private void Fire()
     {
-        MinigameManager.Instance.CameraShake(3f, 0.2f);
+        MinigameManager.Instance.CameraShake(shakeAmount, shakeTime);
         Removed();
     }
     private void BackToPool()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+    public void StopCounting()
+    {
+        SetState(State.Stoping);
+    }
+    public void ContinueCounting()
+    {
+        SetState(State.Stoping);
     }
 }

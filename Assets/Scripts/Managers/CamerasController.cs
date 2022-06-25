@@ -23,7 +23,6 @@ public class CamerasController : MonoBehaviour
         // cbcp.m_AmplitudeGain = amount;
         cbcp.m_FrequencyGain = amount;
         shakeTimer = time;
-        Debug.Log("CamerasShake: shake");
     }
 
     void Update() {
