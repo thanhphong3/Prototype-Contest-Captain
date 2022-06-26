@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private bool triggerWithVehicle = false;
 
     [SerializeField] float speed;
+    [SerializeField] GameObject model;
 
     private void Awake()
     {
@@ -48,6 +49,7 @@ public class Player : MonoBehaviour
         myTween.Kill();
         target = GetPointHand();
         SetState(STATE_PLAYER.Run);
+        RotateModel(target);
         myTween = transform.DOMove(target, GetTimeToTarget()).SetEase(Ease.Linear).OnComplete(() =>
         {
             if (triggerWithVehicle)
@@ -55,6 +57,16 @@ public class Player : MonoBehaviour
             else
                 SetState(STATE_PLAYER.Idle);
         });
+    }
+    private void RotateModel(Vector3 _target)
+    {
+        float tan = (_target.x - transform.position.x)/(_target.z - transform.position.z);
+        float rotateDir = 0f;
+        if(_target.z < transform.position.z)
+        {
+            rotateDir = 180f;
+        }
+        model.transform.rotation = Quaternion.Euler(0f, rotateDir + Mathf.Rad2Deg * Mathf.Atan(tan), 0f);
     }
     private float GetTimeToTarget()
     {

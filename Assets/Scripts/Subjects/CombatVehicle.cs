@@ -16,6 +16,7 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] Image rechargeCounter;
     [SerializeField] GameObject fixingPanel;
     [SerializeField] Image fixCounter;
+    [SerializeField] Animator anim;
 
     [Header("Game-feel side")]
     [SerializeField] float shakeAmount;
@@ -107,7 +108,7 @@ public class CombatVehicle : MonoBehaviour
     public void Removed()
     {
         SetState(State.Removed);
-        BackToPool();
+        Invoke("BackToPool",1f);
     }
     private void SetState(State _state)
     {
@@ -124,11 +125,12 @@ public class CombatVehicle : MonoBehaviour
     }
     private void Fire()
     {
-        MinigameManager.Instance.CameraShake(shakeAmount, shakeTime);
+        anim.Play("Fire");
         Removed();
     }
     private void BackToPool()
     {
+        MinigameManager.Instance.CameraShake(shakeAmount, shakeTime);
         gameObject.SetActive(false);
     }
     public void StopCounting()
