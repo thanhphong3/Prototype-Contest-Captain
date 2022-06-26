@@ -37,7 +37,7 @@ public class CombatVehicle : MonoBehaviour
     private Vector3 opponentBasePos;
     void Start()
     {
-        Spawn(transform.position); //Debug
+        StartCounting();
     }
     void Update()
     {
@@ -45,22 +45,22 @@ public class CombatVehicle : MonoBehaviour
         {
             case State.Counting:
                 remainTime -= Time.deltaTime;
-                if(remainTime <= 0)
+                if (remainTime <= 0)
                 {
                     Fire();
                 }
-                if(isMovableObject)
+                if (isMovableObject)
                 {
                     Move();
                 }
-            break;
+                break;
             case State.Fixing:
                 remainFixingTime -= Time.deltaTime;
-                if(remainFixingTime <= 0)
+                if (remainFixingTime <= 0)
                 {
                     Fixed();
                 }
-            break;
+                break;
         }
         UpdateUI();
     }
@@ -75,7 +75,7 @@ public class CombatVehicle : MonoBehaviour
     }
     public void StartFixing()
     {
-        if(state == State.Counting)
+        if (state == State.Counting)
         {
             FixingUISetActive(true);
             SetState(State.Fixing);
@@ -83,7 +83,7 @@ public class CombatVehicle : MonoBehaviour
     }
     public void StopFixing()
     {
-        if(state == State.Fixing)
+        if (state == State.Fixing)
         {
             FixingUISetActive(false);
             SetState(State.Counting);
@@ -95,12 +95,9 @@ public class CombatVehicle : MonoBehaviour
         remainFixingTime = fixingTime;
         SetState(State.Counting);
     }
-    public void Spawn(Vector3 _position)
-    {
-        gameObject.SetActive(true);
-        transform.position = _position;
-        StartCounting();
-    }
+
+
+
     public void SetOpponentBasePos(Vector3 _position)
     {
         opponentBasePos = _position;
@@ -108,7 +105,7 @@ public class CombatVehicle : MonoBehaviour
     public void Removed()
     {
         SetState(State.Removed);
-        Invoke("BackToPool",1f);
+        Invoke("BackToPool", 1f);
     }
     private void SetState(State _state)
     {
@@ -116,7 +113,7 @@ public class CombatVehicle : MonoBehaviour
     }
     private void Move()
     {
-        Vector3 moveDir = (opponentBasePos - transform.position).normalized; 
+        Vector3 moveDir = (opponentBasePos - transform.position).normalized;
         transform.Translate(moveDir * Time.deltaTime * speed);
     }
     private void Fixed()
@@ -131,7 +128,8 @@ public class CombatVehicle : MonoBehaviour
     private void BackToPool()
     {
         MinigameManager.Instance.CameraShake(shakeAmount, shakeTime);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        Destroy(gameObject);
     }
     public void StopCounting()
     {

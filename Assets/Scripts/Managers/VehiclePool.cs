@@ -9,15 +9,15 @@ public class VehiclePool : MonoBehaviour
     const int BLUE_TEAM_INDEX = 1;
 
     // Start is called before the first frame update
-    public void SpawnVehicleInPool(int _teamIndex, Vector3 _position)
-    {
-        for(int i = 0; i < pool[_teamIndex].childCount; i++)
-        {
-            if(!pool[_teamIndex].GetChild(i).gameObject.active)
-            {
-                pool[_teamIndex].GetChild(i).gameObject.GetComponent<CombatVehicle>().Spawn(_position);
-                return;
-            }
-        }
-    }
+    // public void SpawnVehicleInPool(int _teamIndex, Vector3 _position)
+    // {
+    //     for(int i = 0; i < pool[_teamIndex].childCount; i++)
+    //     {
+    //         if(!pool[_teamIndex].GetChild(i).gameObject.active)
+    //         {
+    //             pool[_teamIndex].GetChild(i).gameObject.GetComponent<CombatVehicle>().Spawn(_position);
+    //             return;
+    //         }
+    //     }
+    // }
 }

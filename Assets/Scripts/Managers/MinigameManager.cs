@@ -13,12 +13,12 @@ public class MinigameManager : MonoBehaviour
 
     void Start()
     {
-
+        Init();
     }
 
-    void Update()
+    private void Init()
     {
-
+        MapManager.Instance.Init();
     }
     private Vector3 GetPointHand()
     {
