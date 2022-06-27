@@ -13,6 +13,9 @@ public class MapManager : MonoBehaviour
     [SerializeField] Transform MapMatrix;
     [SerializeField] Transform ContainerEnemy_A;
     [SerializeField] Transform ContainerEnemy_B;
+    [SerializeField] Transform PointStart_A;
+    [SerializeField] Transform PointStart_B;
+
     private LevelConfig m_levelCurrentConfig;
 
     private void Awake()
@@ -80,18 +83,28 @@ public class MapManager : MonoBehaviour
     public void SpawnEnemy(ItemEnemy itemEnemy, string name)
     {
         GameObject model = GetModelEnemy(((int)itemEnemy.enemyType));
-        Vector3 pos = GetPositionCell(itemEnemy.indexAppear);
-        GameObject enemy = Instantiate(model, pos, Quaternion.identity);
+        Vector3 posEnd = GetPositionCell(itemEnemy.indexAppear);
+        Vector3 posStart;
 
         if (name == "A")
         {
+            posStart = PointStart_A.position;
+            posStart.z = posEnd.z;
+
+            GameObject enemy = Instantiate(model, posStart, Quaternion.identity);
             enemy.transform.parent = ContainerEnemy_A;
             enemy.transform.rotation = Quaternion.Euler(0, 0, 0);
+            enemy.GetComponent<CombatVehicle>().Move(posEnd);
         }
         if (name == "B")
         {
+            posStart = PointStart_B.position;
+            posStart.z = posEnd.z;
+
+            GameObject enemy = Instantiate(model, posStart, Quaternion.identity);
             enemy.transform.parent = ContainerEnemy_B;
             enemy.transform.rotation = Quaternion.Euler(0, 180, 0);
+            enemy.GetComponent<CombatVehicle>().Move(posEnd);
         }
     }
     private Vector3 GetPositionCell(int index)

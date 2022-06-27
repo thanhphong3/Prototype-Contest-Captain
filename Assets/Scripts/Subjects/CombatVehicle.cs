@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CombatVehicle : MonoBehaviour
 {
@@ -37,10 +38,7 @@ public class CombatVehicle : MonoBehaviour
     private float remainFixingTime;
     private State state = State.Disable;
     private Vector3 opponentBasePos;
-    void Start()
-    {
-        StartCounting();
-    }
+
     void Update()
     {
         switch (state)
@@ -51,10 +49,10 @@ public class CombatVehicle : MonoBehaviour
                 {
                     Fire();
                 }
-                if (isMovableObject)
-                {
-                    Move();
-                }
+                // if (isMovableObject)
+                // {
+                //     Move();
+                // }
                 break;
             case State.Fixing:
                 remainFixingTime -= Time.deltaTime;
@@ -91,6 +89,7 @@ public class CombatVehicle : MonoBehaviour
             SetState(State.Counting);
         }
     }
+
     public void StartCounting()
     {
         remainTime = rechargeTime;
@@ -110,10 +109,13 @@ public class CombatVehicle : MonoBehaviour
     {
         state = _state;
     }
-    private void Move()
+    public void Move(Vector3 PosEnd)
     {
-        Vector3 moveDir = (opponentBasePos - transform.position).normalized;
-        transform.Translate(moveDir * Time.deltaTime * speed);
+        // Vector3 moveDir = (opponentBasePos - transform.position).normalized;
+        // transform.Translate(moveDir * Time.deltaTime * speed);
+        float distance = Vector3.Distance(transform.position, PosEnd);
+        float speedCurrent = distance / speed;
+        transform.DOMove(PosEnd, speedCurrent).SetEase(Ease.Linear).OnComplete(StartCounting);
     }
     private void Fixed()
     {
@@ -128,8 +130,8 @@ public class CombatVehicle : MonoBehaviour
     private void BackToPool()
     {
         MinigameManager.Instance.CameraShake(shakeAmount, shakeTime);
-        gameObject.SetActive(false);
-        // Destroy(gameObject);
+        // gameObject.SetActive(false);
+        Destroy(gameObject);
     }
     public void StopCounting()
     {
