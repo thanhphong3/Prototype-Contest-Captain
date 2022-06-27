@@ -11,6 +11,8 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] float dmg;
     [SerializeField] float fixingTime;
     [SerializeField] bool isMovableObject;
+    [SerializeField] float disableTime = 1f;
+    [SerializeField] float rechargeDelayTime = 1f;
 
     [Header("Object Elements")]
     [SerializeField] Image rechargeCounter;
@@ -95,9 +97,6 @@ public class CombatVehicle : MonoBehaviour
         remainFixingTime = fixingTime;
         SetState(State.Counting);
     }
-
-
-
     public void SetOpponentBasePos(Vector3 _position)
     {
         opponentBasePos = _position;
@@ -105,7 +104,7 @@ public class CombatVehicle : MonoBehaviour
     public void Removed()
     {
         SetState(State.Removed);
-        Invoke("BackToPool", 1f);
+        Invoke("BackToPool", disableTime);
     }
     private void SetState(State _state)
     {
@@ -123,13 +122,14 @@ public class CombatVehicle : MonoBehaviour
     private void Fire()
     {
         anim.Play("Fire");
-        Removed();
+        SetState(State.Stoping);
+        Invoke("StartCounting", rechargeDelayTime);
     }
     private void BackToPool()
     {
         MinigameManager.Instance.CameraShake(shakeAmount, shakeTime);
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        // Destroy(gameObject);
     }
     public void StopCounting()
     {
