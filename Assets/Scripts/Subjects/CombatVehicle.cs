@@ -126,6 +126,7 @@ public class CombatVehicle : MonoBehaviour
         anim.Play("Fire");
         SetState(State.Stoping);
         Invoke("StartCounting", rechargeDelayTime);
+        MinigameManager.Instance.SubBlood(dmg);
     }
     private void BackToPool()
     {

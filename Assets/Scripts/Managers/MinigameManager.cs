@@ -5,6 +5,8 @@ using UnityEngine;
 public class MinigameManager : MonoBehaviour
 {
     public static MinigameManager Instance;
+    private float numberBloodCurrent = 1;
+
 
     void Awake()
     {
@@ -20,26 +22,18 @@ public class MinigameManager : MonoBehaviour
     {
         MapManager.Instance.Init();
     }
-    private Vector3 GetPointHand()
-    {
-        RaycastHit raycastHit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out raycastHit, 100f))
-        {
-            if (raycastHit.point != null)
-            {
-                Vector3 result = raycastHit.point;
-                result.y = 0;
-                return result;
-            }
-        }
-        return transform.position;
-    }
 
 
     public void CameraShake(float _amount, float _time)
     {
         CamerasController.Instance.Shake(_amount, _time);
+    }
+    public void SubBlood(float damage)
+    {
+        if (numberBloodCurrent == 0)
+            return;
+        numberBloodCurrent -= damage;
+        UIManager.Instance.UpdateBarBlood(numberBloodCurrent);
     }
 
 }
