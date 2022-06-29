@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class FixingBox : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other) 
+    void OnTriggerStay(Collider other) 
     {
         if(other.gameObject.CompareTag("Vehicle"))
         {
-            other.gameObject.GetComponent<CombatVehicle>().StartFixing();
+            other.GetComponentInParent<CombatVehicle>().StartFixing();
             Player.Instance.SetTriggerWithVehicle(true);
         }
     }
@@ -16,7 +16,7 @@ public class FixingBox : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Vehicle"))
         {
-            other.gameObject.GetComponent<CombatVehicle>().StopFixing();
+            other.GetComponentInParent<CombatVehicle>().StopFixing();
             Player.Instance.SetTriggerWithVehicle(false);
         }
     }
