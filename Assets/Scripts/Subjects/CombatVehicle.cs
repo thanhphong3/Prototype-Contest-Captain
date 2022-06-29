@@ -119,6 +119,7 @@ public class CombatVehicle : MonoBehaviour
     }
     private void Fixed()
     {
+        anim.Play("Fixed");
         Removed();
     }
     private void Fire()
