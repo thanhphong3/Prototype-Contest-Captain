@@ -9,6 +9,7 @@ public class CamerasController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera cvm;
     private float shakeTimer;
     private CinemachineBasicMultiChannelPerlin cbcp;
+    public Camera mainCam;
     // Start is called before the first frame update
 
     private void Awake()

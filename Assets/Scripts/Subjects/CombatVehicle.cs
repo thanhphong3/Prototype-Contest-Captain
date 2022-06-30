@@ -20,6 +20,7 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] GameObject fixingPanel;
     [SerializeField] Image fixCounter;
     [SerializeField] Animator anim;
+    [SerializeField] GameObject UI;
 
     [Header("Game-feel side")]
     [SerializeField] float shakeAmount;
@@ -66,6 +67,9 @@ public class CombatVehicle : MonoBehaviour
     }
     private void UpdateUI()
     {
+        UI.transform.LookAt(CamerasController.Instance.mainCam.transform.position);
+        Debug.Log("UI.transform.rotation: " + UI.transform.rotation.x);
+        // UI.transform.rotation = Quaternion.Euler( UI.transform.rotation.x, 0, 0);
         fixCounter.fillAmount = remainFixingTime / fixingTime;
         rechargeCounter.fillAmount = remainTime / rechargeTime;
     }
