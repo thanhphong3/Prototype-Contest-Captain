@@ -54,6 +54,7 @@ public class DestroyButton : MonoBehaviour
         wasClicked = true;
         int dmg = player.GetDmg();
         target.TakeDmg(dmg);
+        ObjectDefiner.Instance.effectPool.GetEffectFromPool(2, target.gameObject.transform.position);
         if(target!=null)
         {
             RefreshFiller();
