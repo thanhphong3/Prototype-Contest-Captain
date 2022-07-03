@@ -12,6 +12,7 @@ public class DestroyButton : MonoBehaviour
 
     private int maxValue;
     private int currentValue;
+    private Player player;
     // [SerializedField] Camera cam;
     private Camera cam;
     private CombatVehicle target;
@@ -19,6 +20,7 @@ public class DestroyButton : MonoBehaviour
     void Start()
     {
         cam = CamerasController.Instance.mainCam;
+        player = ObjectDefiner.Instance.player;
     }
 
     // Update is called once per frame
@@ -50,7 +52,7 @@ public class DestroyButton : MonoBehaviour
     public void ButtonClick()
     {
         wasClicked = true;
-        int dmg = 1; //hardcode
+        int dmg = player.GetDmg();
         target.TakeDmg(dmg);
         if(target!=null)
         {
@@ -59,7 +61,6 @@ public class DestroyButton : MonoBehaviour
         else
         {
             ResetUI();
-            // ButtonClickOut();
         }
     }
     public void ButtonClickOut()

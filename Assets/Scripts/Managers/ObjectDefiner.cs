@@ -7,6 +7,8 @@ public class ObjectDefiner : MonoBehaviour
     public static ObjectDefiner Instance;
     public Player player;
     public DestroyButton fixButton;
+    public SkillButton skillButton;
+    public RageSkillButton rageSkillButton;
     public EffectPool effectPool;
 
     private void Awake() {
@@ -32,5 +34,21 @@ public class ObjectDefiner : MonoBehaviour
     public bool GetFixButtonActive()
     {
         return fixButton.gameObject.active;
+    }
+    public void SkillPress()
+    {
+        if(skillButton.CanUse())
+        {
+            skillButton.Use();
+            player.SpeedUpSkill();
+        }
+    }
+    public void RageSkillPress()
+    {
+        if(rageSkillButton.CanUse())
+        {
+            rageSkillButton.Use();
+            player.RageSkill();
+        }
     }
 }

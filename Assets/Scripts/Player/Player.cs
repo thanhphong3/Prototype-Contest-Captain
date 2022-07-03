@@ -20,8 +20,17 @@ public class Player : MonoBehaviour
     private Tween myTween;
     private STATE_PLAYER state = STATE_PLAYER.Idle;
     private bool triggerWithVehicle = false;
+    private DestroyButton fixButton;
+    private float speed;
+    private int dmg;
+    // private GameObject skillButton;
 
-    [SerializeField] float speed;
+    [SerializeField] float normalSpeed;
+    [SerializeField] float skillSpeed;
+    [SerializeField] float speedUpDuration;
+    [SerializeField] int normalDmg;
+    [SerializeField] int rageDmg;
+    [SerializeField] float rageDuration;
     [SerializeField] GameObject model;
 
     private void Awake()
@@ -36,6 +45,9 @@ public class Player : MonoBehaviour
     public void Init()
     {
         target = transform.position;
+        fixButton = ObjectDefiner.Instance.fixButton;
+        speed = normalSpeed;
+        dmg = normalDmg;
     }
     public void Update()
     {
@@ -47,14 +59,13 @@ public class Player : MonoBehaviour
     }
     public void Move()
     {
-        if(ObjectDefiner.Instance.fixButton.GetWasClicked())
+        if(fixButton.GetWasClicked())
         {
-            ObjectDefiner.Instance.fixButton.ButtonClickOut();
+            fixButton.ButtonClickOut();
             return;
         }
         myTween.Kill();
         target = GetPointHand();
-        Debug.Log("target: " + target);
         SetState(STATE_PLAYER.Run);
         RotateModel(target);
         myTween = transform.DOMove(target, GetTimeToTarget()).SetEase(Ease.Linear).OnComplete(() =>
@@ -67,13 +78,6 @@ public class Player : MonoBehaviour
     }
     private void RotateModel(Vector3 _target)
     {
-        // float tan = (_target.x - transform.position.x)/(_target.z - transform.position.z);
-        // float rotateDir = 0f;
-        // if(_target.z < transform.position.z)
-        // {
-        //     rotateDir = 180f;
-        // }
-        // model.transform.rotation = Quaternion.Euler(0f, rotateDir + Mathf.Rad2Deg * Mathf.Atan(tan), 0f);
         model.transform.DOLookAt(_target, .1f, AxisConstraint.Y);
     }
     private float GetTimeToTarget()
@@ -115,5 +119,27 @@ public class Player : MonoBehaviour
     public void SetTriggerWithVehicle(bool _isTrigger)
     {
         triggerWithVehicle = _isTrigger;
+    }
+    public void SpeedUpSkill()
+    {
+        speed = skillSpeed;
+        Invoke("SpeedUpEnd", speedUpDuration);
+    }
+    private void SpeedUpEnd()
+    {
+        speed = normalSpeed;
+    }
+    public int GetDmg()
+    {
+        return dmg;
+    }
+    public void RageSkill()
+    {
+        dmg = rageDmg;
+        Invoke("RageEnd", rageDuration);
+    }
+    private void RageEnd()
+    {
+        dmg = normalDmg;
     }
 }

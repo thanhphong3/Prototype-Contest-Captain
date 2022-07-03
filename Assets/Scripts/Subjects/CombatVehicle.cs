@@ -16,6 +16,7 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] float rechargeDelayTime = 1f;
     [SerializeField] int maxHP = 3;
     [SerializeField] int HP = 3;
+    [SerializeField] int myRagePoint = 2;
 
     [Header("Object Elements")]
     [SerializeField] Image rechargeCounter;
@@ -33,11 +34,16 @@ public class CombatVehicle : MonoBehaviour
         Fixing,
         Removed
     }
+    private RageSkillButton rageSkillButton;
     private float remainTime;
     private float remainFixingTime;
     private State state = State.Disable;
     private Vector3 opponentBasePos;
 
+    void Start() 
+    {
+        rageSkillButton = ObjectDefiner.Instance.rageSkillButton;
+    }
     void Update()
     {
         switch (state)
@@ -149,6 +155,7 @@ public class CombatVehicle : MonoBehaviour
         {
             Fixed();
             ObjectDefiner.Instance.fixButton.Hide();
+            rageSkillButton.RagePointAdd(myRagePoint);
         }
     }
     public void GetHP(out int _maxHP, out int _HP)
