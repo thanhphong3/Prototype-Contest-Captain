@@ -7,6 +7,7 @@ public class ObjectDefiner : MonoBehaviour
     public static ObjectDefiner Instance;
     public Player player;
     public DestroyButton fixButton;
+    
 
     private void Awake() {
         Instance = this;
@@ -27,5 +28,9 @@ public class ObjectDefiner : MonoBehaviour
     public void DelinkFixButton()
     {
         fixButton.Hide();
+    }
+    public bool GetFixButtonActive()
+    {
+        return fixButton.gameObject.active;
     }
 }

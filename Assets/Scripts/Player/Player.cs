@@ -41,11 +41,17 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("Move");
             Move();
         }
     }
     public void Move()
     {
+        if(ObjectDefiner.Instance.fixButton.GetWasClicked())
+        {
+            ObjectDefiner.Instance.fixButton.ButtonClickOut();
+            return;
+        }
         myTween.Kill();
         target = GetPointHand();
         Debug.Log("target: " + target);
