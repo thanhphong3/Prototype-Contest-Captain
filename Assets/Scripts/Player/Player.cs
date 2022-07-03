@@ -109,9 +109,5 @@ public class Player : MonoBehaviour
     public void SetTriggerWithVehicle(bool _isTrigger)
     {
         triggerWithVehicle = _isTrigger;
-        // if(triggerWithVehicle)
-        //     SetState(STATE_PLAYER.Fix);
-        // else
-        //     SetState(STATE_PLAYER.Idle);
     }
 }
