@@ -9,7 +9,7 @@ public class FixingBox : MonoBehaviour
         if(other.gameObject.CompareTag("Vehicle"))
         {
             other.GetComponentInParent<CombatVehicle>().StartFixing();
-            Player.Instance.SetTriggerWithVehicle(true);
+            ObjectDefiner.Instance.player.SetTriggerWithVehicle(true);
         }
     }
     void OnTriggerExit(Collider other) 
@@ -17,7 +17,7 @@ public class FixingBox : MonoBehaviour
         if(other.gameObject.CompareTag("Vehicle"))
         {
             other.GetComponentInParent<CombatVehicle>().StopFixing();
-            Player.Instance.SetTriggerWithVehicle(false);
+            ObjectDefiner.Instance.player.SetTriggerWithVehicle(false);
         }
     }
 }

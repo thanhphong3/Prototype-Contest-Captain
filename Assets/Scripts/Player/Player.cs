@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Move();
-            Debug.Log("Muc muc");
         }
     }
     public void Move()
@@ -110,5 +109,9 @@ public class Player : MonoBehaviour
     public void SetTriggerWithVehicle(bool _isTrigger)
     {
         triggerWithVehicle = _isTrigger;
+        // if(triggerWithVehicle)
+        //     SetState(STATE_PLAYER.Fix);
+        // else
+        //     SetState(STATE_PLAYER.Idle);
     }
 }

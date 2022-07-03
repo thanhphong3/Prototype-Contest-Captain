@@ -14,6 +14,8 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] bool isMovableObject;
     [SerializeField] float disableTime = 1f;
     [SerializeField] float rechargeDelayTime = 1f;
+    [SerializeField] int maxHP = 3;
+    [SerializeField] int HP = 3;
 
     [Header("Object Elements")]
     [SerializeField] Image rechargeCounter;
@@ -55,27 +57,28 @@ public class CombatVehicle : MonoBehaviour
                 //     Move();
                 // }
                 break;
-            case State.Fixing:
-                remainFixingTime -= Time.deltaTime;
-                if (remainFixingTime <= 0)
-                {
-                    Fixed();
-                }
-                break;
+            // case State.Fixing:
+            //     remainFixingTime -= Time.deltaTime;
+            //     if (remainFixingTime <= 0)
+            //     {
+            //         Fixed();
+            //     }
+            //     break;
         }
         UpdateUI();
     }
     private void UpdateUI()
     {
         UI.transform.LookAt(CamerasController.Instance.mainCam.transform.position);
-        Debug.Log("UI.transform.rotation: " + UI.transform.rotation.x);
-        // UI.transform.rotation = Quaternion.Euler( UI.transform.rotation.x, 0, 0);
         fixCounter.fillAmount = remainFixingTime / fixingTime;
         rechargeCounter.fillAmount = remainTime / rechargeTime;
     }
     private void FixingUISetActive(bool _isActive)
     {
-        fixingPanel.SetActive(_isActive);
+        if(_isActive)
+            ObjectDefiner.Instance.fixButton.Link(this);
+        else
+            ObjectDefiner.Instance.fixButton.Hide();
     }
     public void StartFixing()
     {
@@ -146,5 +149,19 @@ public class CombatVehicle : MonoBehaviour
     public void ContinueCounting()
     {
         SetState(State.Stoping);
+    }
+    public void TakeDmg(int _dmg)
+    {
+        HP -= _dmg;
+        if(HP <= 0)
+        {
+            Fixed();
+            ObjectDefiner.Instance.fixButton.Hide();
+        }
+    }
+    public void GetHP(out int _maxHP, out int _HP)
+    {
+        _maxHP = maxHP;
+        _HP = HP;
     }
 }
