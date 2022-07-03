@@ -24,10 +24,6 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] GameObject UI;
 
-    [Header("Game-feel side")]
-    [SerializeField] float shakeAmount;
-    [SerializeField] float shakeTime;
-
     enum State
     {
         Disable,
@@ -118,8 +114,6 @@ public class CombatVehicle : MonoBehaviour
     }
     public void Move(Vector3 PosEnd)
     {
-        // Vector3 moveDir = (opponentBasePos - transform.position).normalized;
-        // transform.Translate(moveDir * Time.deltaTime * speed);
         float distance = Vector3.Distance(transform.position, PosEnd);
         float speedCurrent = distance / speed;
         transform.DOMove(PosEnd, speedCurrent).SetEase(Ease.Linear).OnComplete(StartCounting);
@@ -138,8 +132,6 @@ public class CombatVehicle : MonoBehaviour
     }
     private void BackToPool()
     {
-        MinigameManager.Instance.CameraShake(shakeAmount, shakeTime);
-        // gameObject.SetActive(false);
         Destroy(gameObject);
     }
     public void StopCounting()

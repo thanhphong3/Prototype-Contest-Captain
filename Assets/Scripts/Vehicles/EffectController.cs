@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class EffectController : MonoBehaviour
 {
-    [SerializeField] GameObject explFireEffect;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] Transform shotPoint;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Game-feel side")]
+    [SerializeField] float shakeAmount;
+    [SerializeField] float shakeTime;
     public void SpawnFireEffect()
     {
-        explFireEffect.SetActive(true);
+        ObjectDefiner.Instance.effectPool.GetEffectFromPool(0, shotPoint.position);
+        MinigameManager.Instance.CameraShake(shakeAmount, shakeTime);
+    }
+    public void SpawnFixedEffect()
+    {
+        ObjectDefiner.Instance.effectPool.GetEffectFromPool(1, shotPoint.position);
+        MinigameManager.Instance.CameraShake(shakeAmount, shakeTime);
     }
 }

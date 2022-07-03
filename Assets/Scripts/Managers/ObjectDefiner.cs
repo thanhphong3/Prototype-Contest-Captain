@@ -7,7 +7,7 @@ public class ObjectDefiner : MonoBehaviour
     public static ObjectDefiner Instance;
     public Player player;
     public DestroyButton fixButton;
-    
+    public EffectPool effectPool;
 
     private void Awake() {
         Instance = this;
