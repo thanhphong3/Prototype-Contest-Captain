@@ -48,10 +48,10 @@ public class MapManager : MonoBehaviour
 
         foreach (var item in ListPhase)
         {
-            while (!CheckNullEnemy())
-            {
-                yield return null;
-            }
+            // while (!CheckNullEnemy())
+            // {
+            //     yield return null;
+            // }
             yield return SpawnPhase(item);
         }
     }

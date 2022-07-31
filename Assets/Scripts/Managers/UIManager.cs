@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     [SerializeField] Image BloodBar;
+    [SerializeField] Button BtnReplay;
 
     private void Awake()
     {
@@ -20,7 +21,10 @@ public class UIManager : MonoBehaviour
         DOTween.Kill("blood");
         BloodBar.DOFillAmount(valueEnd, .1f).SetId("blood");
     }
-
+    public void ShowReplayBtn()
+    {
+        BtnReplay.gameObject.SetActive(true);
+    }
 
 
 }

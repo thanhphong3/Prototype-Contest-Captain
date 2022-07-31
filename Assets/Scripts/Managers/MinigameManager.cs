@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MinigameManager : MonoBehaviour
 {
@@ -34,6 +35,22 @@ public class MinigameManager : MonoBehaviour
             return;
         numberBloodCurrent -= damage;
         UIManager.Instance.UpdateBarBlood(numberBloodCurrent);
+
+        if (numberBloodCurrent <= 0)
+        {
+            StartEventsLoser();
+        }
+    }
+
+    private void StartEventsLoser()
+    {
+        UIManager.Instance.ShowReplayBtn();
+    }
+
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene("MainGame");
     }
 
 }
