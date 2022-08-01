@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
             if (raycastHit.point != null)
             {
                 Vector3 result = raycastHit.point;
-                result.y += 0.25f;
+                result.y += 0.1f;
                 ObjectDefiner.Instance.effectPool.GetEffectFromPool(3, result);
                 result.y = 0;
                 return result;
