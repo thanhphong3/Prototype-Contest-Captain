@@ -10,6 +10,7 @@ public class CamerasController : MonoBehaviour
     private float shakeTimer;
     private CinemachineBasicMultiChannelPerlin cbcp;
     public Camera mainCam;
+    public GameObject cameraHolder;
     // Start is called before the first frame update
 
     private void Awake()
@@ -41,5 +42,9 @@ public class CamerasController : MonoBehaviour
             if (shakeTimer <= 0f)
                 cbcp.m_FrequencyGain = 0;
         }
+    }
+    public void ChangeIngameCamera()
+    {
+        cameraHolder.GetComponent<Animator>().SetTrigger("Ingame");
     }
 }

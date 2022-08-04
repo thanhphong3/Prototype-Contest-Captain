@@ -27,7 +27,10 @@ public class DestroyButton : MonoBehaviour
     void Update()
     {
         if(target!=null)
+        {
+            // Vector3 buttonPos = new Vector3(target.transform.position.x, target.transform.position.y + yDeviatedDis, target.transform.position.x) ;
             transform.position = cam.WorldToScreenPoint(target.transform.position);
+        }
     }
     public void Hide()
     {
@@ -54,10 +57,10 @@ public class DestroyButton : MonoBehaviour
         wasClicked = true;
         int dmg = player.GetDmg();
         target.TakeDmg(dmg);
-        ObjectDefiner.Instance.effectPool.GetEffectFromPool(2, target.gameObject.transform.position);
         if(target!=null)
         {
             RefreshFiller();
+            ObjectDefiner.Instance.effectPool.GetEffectFromPool(2, target.gameObject.transform.position);
         }
         else
         {

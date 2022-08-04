@@ -7,7 +7,13 @@ public class MinigameManager : MonoBehaviour
 {
     public static MinigameManager Instance;
     private float numberBloodCurrent = 1;
-
+    public enum GAME_STATE
+    {
+        MainMenu,
+        Ingame,
+        Paused
+    }
+    public GAME_STATE gameState = GAME_STATE.MainMenu;
 
     void Awake()
     {
@@ -23,7 +29,15 @@ public class MinigameManager : MonoBehaviour
     {
         MapManager.Instance.Init();
     }
-
+    
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0) && gameState == GAME_STATE.MainMenu)
+        {
+            gameState = GAME_STATE.Ingame;
+            ObjectDefiner.Instance.EnterGame();
+        }
+    }
 
     public void CameraShake(float _amount, float _time)
     {

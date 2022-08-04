@@ -10,6 +10,9 @@ public class ObjectDefiner : MonoBehaviour
     public SkillButton skillButton;
     public RageSkillButton rageSkillButton;
     public EffectPool effectPool;
+    public CamerasController camController;
+    public GameObject mainMenuCanvas;
+    public GameObject ingameCanvas;
 
     private void Awake() {
         Instance = this;
@@ -50,5 +53,11 @@ public class ObjectDefiner : MonoBehaviour
             rageSkillButton.Use();
             player.RageSkill();
         }
+    }
+    public void EnterGame()
+    {
+        camController.ChangeIngameCamera();
+        mainMenuCanvas.SetActive(false);
+        ingameCanvas.SetActive(true);
     }
 }

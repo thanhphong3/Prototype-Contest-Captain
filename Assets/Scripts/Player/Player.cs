@@ -91,17 +91,20 @@ public class Player : MonoBehaviour
 
     private Vector3 GetPointHand()
     {
-        RaycastHit raycastHit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out raycastHit))
+        if(MinigameManager.Instance.gameState == MinigameManager.GAME_STATE.Ingame)
         {
-            if (raycastHit.point != null)
+            RaycastHit raycastHit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out raycastHit))
             {
-                Vector3 result = raycastHit.point;
-                result.y += 0.1f;
-                ObjectDefiner.Instance.effectPool.GetEffectFromPool(3, result);
-                result.y = 0;
-                return result;
+                if (raycastHit.point != null)
+                {
+                    Vector3 result = raycastHit.point;
+                    result.y += 0.1f;
+                    ObjectDefiner.Instance.effectPool.GetEffectFromPool(3, result);
+                    result.y = 0;
+                    return result;
+                }
             }
         }
         return transform.position;
