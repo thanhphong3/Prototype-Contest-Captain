@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
         Idle,
         Run,
         Fix,
+        Win,
+        Lose,
     }
 
     public static Player Instance;
@@ -51,7 +53,7 @@ public class Player : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && state != STATE_PLAYER.Win && state != STATE_PLAYER.Lose)
         {
             Debug.Log("Move");
             Move();
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour
     }
     public void Move()
     {
-        if(fixButton.GetWasClicked())
+        if (fixButton.GetWasClicked())
         {
             fixButton.ButtonClickOut();
             return;
@@ -91,7 +93,7 @@ public class Player : MonoBehaviour
 
     private Vector3 GetPointHand()
     {
-        if(MinigameManager.Instance.gameState == MinigameManager.GAME_STATE.Ingame)
+        if (MinigameManager.Instance.gameState == MinigameManager.GAME_STATE.Ingame)
         {
             RaycastHit raycastHit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

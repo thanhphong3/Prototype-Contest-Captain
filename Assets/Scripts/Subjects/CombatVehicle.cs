@@ -40,7 +40,7 @@ public class CombatVehicle : MonoBehaviour
     private State state = State.Disable;
     private Vector3 opponentBasePos;
 
-    void Start() 
+    void Start()
     {
         rageSkillButton = ObjectDefiner.Instance.rageSkillButton;
     }
@@ -59,13 +59,13 @@ public class CombatVehicle : MonoBehaviour
                 //     Move();
                 // }
                 break;
-            // case State.Fixing:
-            //     remainFixingTime -= Time.deltaTime;
-            //     if (remainFixingTime <= 0)
-            //     {
-            //         Fixed();
-            //     }
-            //     break;
+                // case State.Fixing:
+                //     remainFixingTime -= Time.deltaTime;
+                //     if (remainFixingTime <= 0)
+                //     {
+                //         Fixed();
+                //     }
+                //     break;
         }
         UpdateUI();
     }
@@ -77,7 +77,7 @@ public class CombatVehicle : MonoBehaviour
     }
     private void FixingUISetActive(bool _isActive)
     {
-        if(_isActive)
+        if (_isActive)
             ObjectDefiner.Instance.fixButton.Link(this);
         else
             ObjectDefiner.Instance.fixButton.Hide();
@@ -151,7 +151,7 @@ public class CombatVehicle : MonoBehaviour
     public void TakeDmg(int _dmg)
     {
         HP -= _dmg;
-        if(HP <= 0)
+        if (HP <= 0)
         {
             Fixed();
             ObjectDefiner.Instance.fixButton.Hide();

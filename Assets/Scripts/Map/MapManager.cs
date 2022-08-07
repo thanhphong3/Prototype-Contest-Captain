@@ -115,7 +115,7 @@ public class MapManager : MonoBehaviour
     {
         return ListEnemy[index];
     }
-    private bool CheckNullEnemy()
+    public bool CheckNullEnemy()
     {
         return ContainerEnemy_A.childCount == 0 && ContainerEnemy_B.childCount == 0;
     }

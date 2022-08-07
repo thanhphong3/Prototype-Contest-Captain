@@ -11,7 +11,7 @@ public class MinigameManager : MonoBehaviour
     {
         MainMenu,
         Ingame,
-        Paused
+        Endgame
     }
     public GAME_STATE gameState = GAME_STATE.MainMenu;
 
@@ -29,13 +29,17 @@ public class MinigameManager : MonoBehaviour
     {
         MapManager.Instance.Init();
     }
-    
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && gameState == GAME_STATE.MainMenu)
         {
             gameState = GAME_STATE.Ingame;
             ObjectDefiner.Instance.EnterGame();
+        }
+        if (gameState == GAME_STATE.Ingame)
+        {
+            CheckWin();
         }
     }
 
@@ -53,12 +57,27 @@ public class MinigameManager : MonoBehaviour
         if (numberBloodCurrent <= 0)
         {
             StartEventsLoser();
+
         }
     }
 
     private void StartEventsLoser()
     {
+        Player.Instance.SetState(Player.STATE_PLAYER.Lose);
+        UIManager.Instance.ShowTextLose();
         UIManager.Instance.ShowReplayBtn();
+        gameState = GAME_STATE.Endgame;
+    }
+    public void CheckWin()
+    {
+        bool isNullEnemy = MapManager.Instance.CheckNullEnemy();
+        if (isNullEnemy)
+        {
+            Player.Instance.SetState(Player.STATE_PLAYER.Win);
+            UIManager.Instance.ShowTextWin();
+            UIManager.Instance.ShowReplayBtn();
+            gameState = GAME_STATE.Endgame;
+        }
     }
 
 
