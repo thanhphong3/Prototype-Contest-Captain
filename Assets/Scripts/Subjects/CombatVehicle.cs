@@ -67,7 +67,7 @@ public class CombatVehicle : MonoBehaviour
                 //     }
                 //     break;
         }
-        UpdateUI();
+        // UpdateUI();
     }
     private void UpdateUI()
     {
