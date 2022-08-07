@@ -35,6 +35,7 @@ public class MinigameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(countingTime);
         gameState = GAME_STATE.Ingame;
+        Init();
     }
 
     private void Update()
@@ -45,7 +46,6 @@ public class MinigameManager : MonoBehaviour
             ObjectDefiner.Instance.EnterGame();
             gameState = GAME_STATE.Counting;
             StartCoroutine(EndCounting());
-            Init();
         }
         if (gameState == GAME_STATE.Ingame)
         {
