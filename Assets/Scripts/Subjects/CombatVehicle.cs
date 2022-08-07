@@ -17,6 +17,7 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] int maxHP = 3;
     [SerializeField] int HP = 3;
     [SerializeField] int myRagePoint = 2;
+    [SerializeField] Material blueMat;
 
     [Header("Object Elements")]
     [SerializeField] Image rechargeCounter;
@@ -24,6 +25,9 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] Image fixCounter;
     [SerializeField] Animator anim;
     [SerializeField] GameObject UI;
+    [SerializeField] GameObject Chassis;
+    [SerializeField] GameObject[] Tracks;
+    [SerializeField] GameObject Turret;
 
     enum State
     {
@@ -162,5 +166,13 @@ public class CombatVehicle : MonoBehaviour
     {
         _maxHP = maxHP;
         _HP = HP;
+    }
+    public void SetAsBlueTeam()
+    {
+        Debug.LogError("Blue team spawn");
+        Chassis.GetComponent<Renderer>().material = blueMat;
+        Tracks[0].GetComponent<Renderer>().material = blueMat;
+        Tracks[1].GetComponent<Renderer>().material = blueMat;
+        Turret.GetComponent<Renderer>().material = blueMat;
     }
 }

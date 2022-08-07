@@ -105,6 +105,7 @@ public class MapManager : MonoBehaviour
             enemy.transform.parent = ContainerEnemy_B;
             enemy.transform.rotation = Quaternion.Euler(0, 180, 0);
             enemy.GetComponent<CombatVehicle>().Move(posEnd);
+            enemy.GetComponent<CombatVehicle>().SetAsBlueTeam();
         }
     }
     private Vector3 GetPositionCell(int index)

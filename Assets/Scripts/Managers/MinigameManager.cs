@@ -24,7 +24,7 @@ public class MinigameManager : MonoBehaviour
 
     void Start()
     {
-        Init();
+        // Init();
     }
 
     private void Init()
@@ -45,6 +45,7 @@ public class MinigameManager : MonoBehaviour
             ObjectDefiner.Instance.EnterGame();
             gameState = GAME_STATE.Counting;
             StartCoroutine(EndCounting());
+            Init();
         }
         if (gameState == GAME_STATE.Ingame)
         {
