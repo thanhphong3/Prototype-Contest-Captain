@@ -67,11 +67,11 @@ public class CombatVehicle : MonoBehaviour
                 //     }
                 //     break;
         }
-        // UpdateUI();
+        UpdateUI();
     }
     private void UpdateUI()
     {
-        UI.transform.LookAt(new Vector3(0f, 0f, CamerasController.Instance.mainCam.transform.position.z));
+        // UI.transform.LookAt(new Vector3(0f, 0f, CamerasController.Instance.mainCam.transform.position.z));
         fixCounter.fillAmount = remainFixingTime / fixingTime;
         rechargeCounter.fillAmount = remainTime / rechargeTime;
     }
