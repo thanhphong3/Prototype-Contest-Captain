@@ -7,9 +7,11 @@ public class MinigameManager : MonoBehaviour
 {
     public static MinigameManager Instance;
     private float numberBloodCurrent = 1;
+    private float countingTime = 3f;
     public enum GAME_STATE
     {
         MainMenu,
+        Counting,
         Ingame,
         Endgame
     }
@@ -29,13 +31,20 @@ public class MinigameManager : MonoBehaviour
     {
         MapManager.Instance.Init();
     }
+    private IEnumerator EndCounting()
+    {
+        yield return new WaitForSeconds(countingTime);
+        gameState = GAME_STATE.Ingame;
+    }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && gameState == GAME_STATE.MainMenu)
         {
-            gameState = GAME_STATE.Ingame;
+            // gameState = GAME_STATE.Ingame;
             ObjectDefiner.Instance.EnterGame();
+            gameState = GAME_STATE.Counting;
+            StartCoroutine(EndCounting());
         }
         if (gameState == GAME_STATE.Ingame)
         {

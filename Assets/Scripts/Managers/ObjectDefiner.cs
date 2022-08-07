@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectDefiner : MonoBehaviour
 {
@@ -11,8 +12,9 @@ public class ObjectDefiner : MonoBehaviour
     public RageSkillButton rageSkillButton;
     public EffectPool effectPool;
     public CamerasController camController;
-    public GameObject mainMenuCanvas;
+    public GameObject mainMenuText;
     public GameObject ingameCanvas;
+    [SerializeField] Text countingTxt;
 
     private void Awake() {
         Instance = this;
@@ -57,7 +59,17 @@ public class ObjectDefiner : MonoBehaviour
     public void EnterGame()
     {
         camController.ChangeIngameCamera();
-        mainMenuCanvas.SetActive(false);
+        StartCoroutine(Counting());
+    }
+    private IEnumerator Counting()
+    {
+        mainMenuText.SetActive(false);
+        for(int i = 3; i > 0; i--)
+        {
+            countingTxt.text = i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+        countingTxt.gameObject.SetActive(false);
         ingameCanvas.SetActive(true);
     }
 }
