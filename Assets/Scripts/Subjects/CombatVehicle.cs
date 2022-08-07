@@ -71,7 +71,7 @@ public class CombatVehicle : MonoBehaviour
     }
     private void UpdateUI()
     {
-        UI.transform.LookAt(CamerasController.Instance.mainCam.transform.position);
+        UI.transform.LookAt(new Vector3(0f, 0f, CamerasController.Instance.mainCam.transform.position.z));
         fixCounter.fillAmount = remainFixingTime / fixingTime;
         rechargeCounter.fillAmount = remainTime / rechargeTime;
     }
