@@ -21,7 +21,7 @@ public class MinigameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        PlayerPrefs.SetInt("Level", 1);
+        // PlayerPrefs.SetInt("Level", 1);
     }
 
     void Start()
