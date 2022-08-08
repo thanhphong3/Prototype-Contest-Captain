@@ -15,6 +15,9 @@ public class ObjectDefiner : MonoBehaviour
     public GameObject mainMenuText;
     public GameObject ingameCanvas;
     [SerializeField] Text countingTxt;
+    [SerializeField] GameObject speedSkillBtn;
+    [SerializeField] GameObject quickFixSkillBtn;
+    [SerializeField] Text howToPlayTxt;
 
     private void Awake() {
         Instance = this;
@@ -23,6 +26,14 @@ public class ObjectDefiner : MonoBehaviour
     }
     private void Start()
     {
+        if(MapManager.Instance.m_levelCurrentConfig.haveSpeedUp)
+        {
+            speedSkillBtn.SetActive(true);
+        }
+        if(MapManager.Instance.m_levelCurrentConfig.haveSpeedUp)
+        {
+            speedSkillBtn.SetActive(true);
+        }
     }
     private void Update()
     {
@@ -71,5 +82,20 @@ public class ObjectDefiner : MonoBehaviour
         }
         countingTxt.gameObject.SetActive(false);
         ingameCanvas.SetActive(true);
+    }
+    public void ShowFireInfo()
+    {
+        ShowMess("Don't let those TANK SHOT.");
+    }
+    private void ShowMess(string mess)
+    {
+        howToPlayTxt.gameObject.SetActive(true);
+        howToPlayTxt.text = mess;
+        StartCoroutine(HideMess());
+    }
+    private IEnumerator HideMess()
+    {
+        yield return new WaitForSeconds(2f);
+        howToPlayTxt.gameObject.SetActive(false);
     }
 }

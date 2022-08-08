@@ -16,7 +16,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] Transform PointStart_A;
     [SerializeField] Transform PointStart_B;
 
-    private LevelConfig m_levelCurrentConfig;
+    public LevelConfig m_levelCurrentConfig;
+    private int currentPhase = 0;
 
     private void Awake()
     {
@@ -35,11 +36,15 @@ public class MapManager : MonoBehaviour
     }
     private void GetCurrentLevel()
     {
-
+        m_level = PlayerPrefs.GetInt("Level", 0);
     }
     private void GetLevelCurrentConfig()
     {
         m_levelCurrentConfig = ListLevel[m_level];
+        if(m_level == 0)
+        {
+            MinigameManager.Instance.SetFirstPlayTime();
+        }
     }
 
     IEnumerator SpawnLevel()
@@ -52,7 +57,9 @@ public class MapManager : MonoBehaviour
             // {
             //     yield return null;
             // }
+            // Debug.Log("CurrentPhase: " + currentPhase + " lastPhase: " + m_levelCurrentConfig.ListPhase.Count);
             yield return SpawnPhase(item);
+            currentPhase ++;
         }
     }
     IEnumerator SpawnPhase(ItemPhase itemPhase)
@@ -95,6 +102,8 @@ public class MapManager : MonoBehaviour
             enemy.transform.parent = ContainerEnemy_A;
             enemy.transform.rotation = Quaternion.Euler(0, 0, 0);
             enemy.GetComponent<CombatVehicle>().Move(posEnd);
+            if(itemEnemy.isNeedFocus)
+                enemy.GetComponent<CombatVehicle>().SetFocus(itemEnemy.fakeFixTime);
         }
         if (name == "B")
         {
@@ -106,6 +115,8 @@ public class MapManager : MonoBehaviour
             enemy.transform.rotation = Quaternion.Euler(0, 180, 0);
             enemy.GetComponent<CombatVehicle>().Move(posEnd);
             enemy.GetComponent<CombatVehicle>().SetAsBlueTeam();
+            if(itemEnemy.isNeedFocus)
+                enemy.GetComponent<CombatVehicle>().SetFocus(itemEnemy.fakeFixTime);
         }
     }
     private Vector3 GetPositionCell(int index)
@@ -119,5 +130,9 @@ public class MapManager : MonoBehaviour
     public bool CheckNullEnemy()
     {
         return ContainerEnemy_A.childCount == 0 && ContainerEnemy_B.childCount == 0;
+    }
+    public bool IsLastPhase()
+    {
+        return currentPhase == m_levelCurrentConfig.ListPhase.Count;
     }
 }

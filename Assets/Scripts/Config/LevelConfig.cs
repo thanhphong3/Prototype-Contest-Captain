@@ -12,6 +12,8 @@ using System;
 public class LevelConfig : ScriptableObject
 {
     public List<ItemPhase> ListPhase;
+    public bool haveSpeedUp;
+    public bool haveQuickFix;
 }
 
 [Serializable]
@@ -38,5 +40,7 @@ public class ItemEnemy
 {
     public EnemyType enemyType;
     public int indexAppear;
+    public bool isNeedFocus;
+    public float fakeFixTime;
 }
 

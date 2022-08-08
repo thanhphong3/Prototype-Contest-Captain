@@ -12,7 +12,7 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] float dmg;
     [SerializeField] float fixingTime;
     [SerializeField] bool isMovableObject;
-    [SerializeField] float disableTime = 1f;
+    [SerializeField] float disableTime = 0.5f;
     [SerializeField] float rechargeDelayTime = 1f;
     [SerializeField] int maxHP = 3;
     [SerializeField] int HP = 3;
@@ -28,6 +28,8 @@ public class CombatVehicle : MonoBehaviour
     [SerializeField] GameObject Chassis;
     [SerializeField] GameObject[] Tracks;
     [SerializeField] GameObject Turret;
+    [SerializeField] GameObject FocusUI;
+    private bool isNeedToFocus = false;
 
     enum State
     {
@@ -48,6 +50,16 @@ public class CombatVehicle : MonoBehaviour
     {
         rageSkillButton = ObjectDefiner.Instance.rageSkillButton;
     }
+    private void FocusMe()
+    {
+        isNeedToFocus = false;
+        FocusUI.SetActive(true);
+    }
+    public void SetFocus(float fakeFixTime)
+    {
+        isNeedToFocus = true;
+        rechargeTime = fakeFixTime;
+    }
     void Update()
     {
         switch (state)
@@ -58,20 +70,9 @@ public class CombatVehicle : MonoBehaviour
                 {
                     Fire();
                 }
-                // if (isMovableObject)
-                // {
-                //     Move();
-                // }
+                UpdateUI();
                 break;
-                // case State.Fixing:
-                //     remainFixingTime -= Time.deltaTime;
-                //     if (remainFixingTime <= 0)
-                //     {
-                //         Fixed();
-                //     }
-                //     break;
         }
-        UpdateUI();
     }
     private void UpdateUI()
     {
@@ -121,6 +122,22 @@ public class CombatVehicle : MonoBehaviour
     private void SetState(State _state)
     {
         state = _state;
+        if(_state == State.Counting)
+        {
+            if(isNeedToFocus)
+                FocusMe();
+            ShowUI();
+        }
+        else
+            HideUI();
+    }
+    private void ShowUI()
+    {
+        UI.SetActive(true);
+    }
+    private void HideUI()
+    {
+        UI.SetActive(false);
     }
     public void Move(Vector3 PosEnd)
     {
@@ -130,7 +147,7 @@ public class CombatVehicle : MonoBehaviour
     }
     private void Fixed()
     {
-        anim.Play("Fixed");
+        // anim.Play("Fixed");
         Removed();
     }
     private void Fire()

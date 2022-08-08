@@ -8,6 +8,7 @@ public class MinigameManager : MonoBehaviour
     public static MinigameManager Instance;
     private float numberBloodCurrent = 1;
     private float countingTime = 3f;
+    private bool isFirstTimePlay = false;
     public enum GAME_STATE
     {
         MainMenu,
@@ -67,8 +68,20 @@ public class MinigameManager : MonoBehaviour
         if (numberBloodCurrent <= 0)
         {
             StartEventsLoser();
-
         }
+
+        if(isFirstTimePlay)
+        {
+            ShowFireInfo();
+        }
+    }
+    public void SetFirstPlayTime()
+    {
+        isFirstTimePlay = true;
+    }
+    private void ShowFireInfo()
+    {
+        ObjectDefiner.Instance.ShowFireInfo();
     }
 
     private void StartEventsLoser()
@@ -81,13 +94,20 @@ public class MinigameManager : MonoBehaviour
     public void CheckWin()
     {
         bool isNullEnemy = MapManager.Instance.CheckNullEnemy();
-        if (isNullEnemy)
+        if (isNullEnemy && isFinalWave())
         {
             Player.Instance.SetState(Player.STATE_PLAYER.Win);
             UIManager.Instance.ShowTextWin();
             UIManager.Instance.ShowReplayBtn();
+            // UIManager.Instance.ShowNextBtn();
+            int currentLevel = PlayerPrefs.GetInt("Level", level);
+            PlayerPrefs.SetInt("Level", currentLevel);
             gameState = GAME_STATE.Endgame;
         }
+    }
+    private bool isFinalWave()
+    {
+        return MapManager.Instance.IsLastPhase();
     }
 
 
