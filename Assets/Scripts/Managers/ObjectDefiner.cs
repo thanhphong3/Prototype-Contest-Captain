@@ -85,7 +85,7 @@ public class ObjectDefiner : MonoBehaviour
     }
     public void ShowFireInfo()
     {
-        ShowMess("Don't let those TANKS SHOT.");
+        ShowMess("Don't let those TANKS SHOOT.");
     }
     private void ShowMess(string mess)
     {
