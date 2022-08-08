@@ -186,7 +186,6 @@ public class CombatVehicle : MonoBehaviour
     }
     public void SetAsBlueTeam()
     {
-        Debug.LogError("Blue team spawn");
         Chassis.GetComponent<Renderer>().material = blueMat;
         Tracks[0].GetComponent<Renderer>().material = blueMat;
         Tracks[1].GetComponent<Renderer>().material = blueMat;

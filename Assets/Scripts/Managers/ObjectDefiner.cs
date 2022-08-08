@@ -24,7 +24,7 @@ public class ObjectDefiner : MonoBehaviour
         GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.GetComponent<Player>();
     }
-    private void Start()
+    public void Init()
     {
         if(MapManager.Instance.m_levelCurrentConfig.haveSpeedUp)
         {

@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     [SerializeField] Image BloodBar;
     [SerializeField] Button BtnReplay;
+    [SerializeField] Button BtnNext;
     [SerializeField] GameObject txtWin;
     [SerializeField] GameObject txtLose;
 
@@ -26,6 +27,10 @@ public class UIManager : MonoBehaviour
     public void ShowReplayBtn()
     {
         BtnReplay.gameObject.SetActive(true);
+    }
+    public void ShowNextBtn()
+    {
+        BtnNext.gameObject.SetActive(true);
     }
     public void ShowTextWin()
     {

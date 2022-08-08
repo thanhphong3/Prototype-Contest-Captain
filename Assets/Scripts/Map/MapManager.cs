@@ -32,7 +32,12 @@ public class MapManager : MonoBehaviour
     {
         GetCurrentLevel();
         GetLevelCurrentConfig();
+        InitObjectDefiner();
         StartCoroutine(SpawnLevel());
+    }
+    private void InitObjectDefiner()
+    {
+        ObjectDefiner.Instance.Init();
     }
     private void GetCurrentLevel()
     {

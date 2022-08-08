@@ -21,6 +21,7 @@ public class MinigameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        PlayerPrefs.SetInt("Level", 1);
     }
 
     void Start()
@@ -88,8 +89,9 @@ public class MinigameManager : MonoBehaviour
     {
         Player.Instance.SetState(Player.STATE_PLAYER.Lose);
         UIManager.Instance.ShowTextLose();
-        UIManager.Instance.ShowReplayBtn();
+        // UIManager.Instance.ShowReplayBtn();
         gameState = GAME_STATE.Endgame;
+        StartCoroutine(c_nextLevel());
     }
     public void CheckWin()
     {
@@ -98,18 +100,28 @@ public class MinigameManager : MonoBehaviour
         {
             Player.Instance.SetState(Player.STATE_PLAYER.Win);
             UIManager.Instance.ShowTextWin();
-            UIManager.Instance.ShowReplayBtn();
+            // UIManager.Instance.ShowReplayBtn();
             // UIManager.Instance.ShowNextBtn();
-            int currentLevel = PlayerPrefs.GetInt("Level", level);
+            int currentLevel = PlayerPrefs.GetInt("Level", 0);
+            currentLevel += 1;
+            if(currentLevel >= 2)
+            {
+                currentLevel = 0;
+            }
             PlayerPrefs.SetInt("Level", currentLevel);
             gameState = GAME_STATE.Endgame;
+            StartCoroutine(c_nextLevel());
         }
     }
     private bool isFinalWave()
     {
         return MapManager.Instance.IsLastPhase();
     }
-
+    private IEnumerator c_nextLevel()
+    {
+        yield return new WaitForSeconds(3f);
+        ResetGame();
+    }
 
     public void ResetGame()
     {
